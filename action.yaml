@@ -1,0 +1,14 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: action
+name: go-checks
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: cloudbees-io/checkout@v1
+    - name: Install and Run Linter
+      uses: docker://golangci/golangci-lint:latest
+    - name: Run Gosec Security Scanner
+      uses: securego/gosec@master
+      with:
+        args: ./...
